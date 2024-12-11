@@ -208,18 +208,31 @@ h1.greeting-text {
   text-decoration-thickness: 2px;
 }
 
-
-.projects {
-    background-color: white;
-    color: black;
-}
 .text-link {
-  color: #007bff; /* Синий цвет текста */
-  text-decoration: none; /* Убирает подчеркивание */
-  transition: color 0.2s ease; /* Эффект плавного изменения цвета */
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .text-link:hover {
-  color: #0056b3; /* Более темный оттенок синего при наведении */
-  text-decoration: underline; /* Подчеркивание при наведении */
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.language-toggle {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    font-size: 16px;
+}
+
+.language-toggle a {
+    text-decoration: none;
+    color: #000;
+    padding: 5px;
+}
+
+.language-toggle a.active {
+    font-weight: bold;
+    color: #0056b3;
 }

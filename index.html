@@ -1,15 +1,30 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="{{ language }}">
+
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    ">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" ,
-          crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="static/css/custom.css">
-    <title> Даниил Костин | Ресерчер жизни </title>
+    <link rel="stylesheet" href="static/css/slider_style.css">
+
+    <!-- Подключаем CSS в зависимости от выбранной темы -->
+    {% if theme == "dark" %}
+    <link rel="stylesheet" href="static/css/dark_theme.css">
+    {% else %}
+    <link rel="stylesheet" href="static/css/light_theme.css">
+    {% endif %}
+
 </head>
+
 <body>
+
+<!-- Переключатель языков -->
+    <div class="language-toggle">
+        <a href="{{ url_for('set_language', language='en') }}" class="{{ 'active' if language == 'en' else '' }}">EN</a> |
+        <a href="{{ url_for('set_language', language='ru') }}" class="{{ 'active' if language == 'ru' else '' }}">RU</a>
+    </div>
+
 <!-- Секция промо с темным фоном - шапка сайта -->
 <section class="promo dark-bg pt-2 pb-5">
     <div class="container">
@@ -23,36 +38,40 @@
                              style="border-radius: 60%; width: 70px; height: 70px;">
                     </div>
                     <div class="logo-right" style="margin-left: 6px;">
-                        <div class="logo-title link-purple">Даниил Костин</div>
-                        <div class="logo-subtitle text-yellow">Ресерчер жизни</div>
+                        <div class="logo-title link-purple">{{translations['name']}}</div>
+                        <div class="logo-subtitle text-yellow">{{translations['kredo']}}</div>
                     </div>
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+
+
+
                 <!-- Меню навигации -->
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="nav m-auto">
                         <li class="nav-item mx-3">
-                            <a href="#story" class="nav-link link-purple link-border-bottom">Вкратце обо мне</a>
+                            <a href="#story" class="nav-link link-purple link-border-bottom">{{translations['about']}}</a>
                         </li>
                         <li class="nav-item mx-3">
-                            <a href="#education" class="nav-link link-purple link-border-bottom">Образование</a>
+                            <a href="#education" class="nav-link link-purple link-border-bottom">{{translations['education']}}</a>
                         </li>
                         <li class="nav-item mx-3">
-                            <a href="#projects" class="nav-link link-purple link-border-bottom">Мой опыт работы</a>
+                            <a href="#projects" class="nav-link link-purple link-border-bottom">{{translations['projects']}}</a>
                         </li>
                         <li class="nav-item mx-3">
-                            <a href="#contact" class="nav-link link-purple link-border-bottom">Сотрудничество</a>
+                            <a href="#contact" class="nav-link link-purple link-border-bottom">{{translations['contact']}}</a>
                         </li>
+
                     </ul>
                     <ul class="nav ml-auto">
                         <li class="nav-item mx-3">
                             <a href="https://github.com/Tasher239" class="nav-link link-purple link-border-bottom">Github</a>
                         </li>
                         <li class="nav-item mx-3 mr-0">
-                            <a href="#contact" class="nav-link link-purple link-border-bottom">Написать мне</a>
+                            <a href="#contact" class="nav-link link-purple link-border-bottom">{{translations['mail_me']}}</a>
+                        </li>
+
+                         <li class="nav-item mx-3">
+                            {% include "theme_toggle.html" %}
                         </li>
                     </ul>
                 </div>
@@ -62,65 +81,56 @@
         <!-- Блок приветствия с основной информацией -->
         <div class="row py-0 py-sm-5">
             <div class="col-12 col-lg-8 offset-lg-2 mb-0 mb-sm-5 py-5">
-                <h1 class="h1 font-weight-bold font greeting-text text-blue strikethrough">Зовут дядя Вова. Занимаюсь
-                    борьбой!</h1>
-                <h1 class="h1 font-weight-bold font greeting-text text-blue">Доброе утро, добрый день, добрый вечер!
-                    Меня зовут Даниил</h1>
-                <p class="promo-text pb-3">Я - профессиональный квадробер 🐨<br> Занимаюсь хоббихорсингом, делаю лабы по
-                    матану
-                    (всем звуук) и иногда, пока жду свой карамельный фраппучино на кокосовм молоке, пишу код на Python
-                </p>
-                <a href="#contact" class="btn text-center" style="background-color: #DCFF05; color: #102D69">Написать
-                    мне</a>
+                <h1 class="h1 font-weight-bold font greeting-text text-blue strikethrough">{{translations['mem_info']}}</h1>
+                <h1 class="h1 font-weight-bold font greeting-text text-blue">{{translations['greeting']}}</h1>
+                <p class="promo-text pb-3">{{translations['greeting_info']}}</p>
+                <a href="#contact" class="btn text-center" style="background-color: #DCFF05; color: #102D69">{{translations['mail_me']}}</a>
             </div>
         </div>
     </div>
 </section>
 <!-- Секция "Обо мне" -->
 <section class="story container py-5 text-center" id="story">
-    <h2 class="h1 font-weight-bold mt-4 mb-3 mb-sm-5 pb-3 navigo-font">Обо мне</h2>
+    <h2 class="h1 font-weight-bold mt-4 mb-3 mb-sm-5 pb-3 navigo-font">{{translations['about']}}</h2>
     <div class="row">
         <div class="col-12 col-sm-9 offset-sm-2 px-2 pb-5">
-            <p class="font-weight-bold pb-4">Я &mdash; обычный студент, который любит программирование, математику и
-                хоббихорсинг. В свободное время я занимаюсь спортом, читаю книги и смотрю фильмы. Моя цель &mdash;
-                стать профессионалом в области машинного обучения и искусственного интеллекта <br>
-                (таким меня видит GitHub Copilot - в целом, звучит правдеподобно, я в это верю)</p>
+            <p class="font-weight-bold pb-4">{{translations['about_info']}}</p>
         </div>
     </div>
 </section>
 <!-- Секция опыта работы с темным фоном -->
 <section class="education dark-bg pt-3 pt-sm-5 pb-3" id="education">
     <div class="container">
-        <h2 class="h1 font-weight-bold text-center mt-4 mt-sm-2 mb-0 mb-sm-4 pb-2 navigo-font">Образование</h2>
+        <h2 class="h1 font-weight-bold text-center mt-4 mt-sm-2 mb-0 mb-sm-4 pb-2 navigo-font">{{translations['education']}}</h2>
         <div class="work-experience text-white">
             <div class="d-flex align-items-center mb-2">
                 <img src="../static/01_Logo_HSE_full_rus_PANTONE_for_dark_2.png" alt="HSE Logo" class="me-3"
                      style="height: 60px; margin-top: -6px;">
                 <div class="d-flex flex-column justify-content-center">
-                    <h3 class="h4 mb-1">Национальный исследовательский университет «Высшая школа экономики», Москва</h3>
-                    <p class="text-white-40 mb-0">Бакалавриат, 2023-2027</p>
+                    <h3 class="h4 mb-1">{{translations['hse_university']}}</h3>
+                    <p class="text-white-40 mb-0">{{translations['hse_grad_date']}}</p>
                 </div>
             </div>
             <div class="position mb-4" style="margin-left: 20px;">
-                <h4 class="h5 text-purple">Студент</h4>
-                <p style="margin-bottom: 50px;">Занимаюсь изучением математики и программирования.</p>
+                <h4 class="h5 text-purple">{{translations['hse_status']}}</h4>
+                <p style="margin-bottom: 50px;">{{translations['hse_working']}}</p>
             </div>
             <div class="d-flex align-items-center mb-4">
                 <img src="../static/liceum_logo.jpg" alt="HSE Logo" class="me-3"
                      style="border-radius: 60%; width: 70px; height: 70px;">
                 <div class="d-flex flex-column justify-content-center">
-                    <h3 class="h4 mb-1">Президентский физико-математический лицей №239, Санкт-Петербург</h3>
-                    <p class="text-white-40 mb-0">Среднее общее образование, 2020-2023</p>
+                    <h3 class="h4 mb-1">{{translations['school']}}</h3>
+                    <p class="text-white-40 mb-0">{{translations['school_grad_date']}}</p>
                 </div>
             </div>
         </div>
 </section>
 
 <!-- Секция проектов -->
-<section class="projects dark-bg pt-3 pt-sm-5 pb-3" id="projects">
+<section class="projects pt-3 pt-sm-5 pb-3" id="projects">
     <div class="container">
-        <h2 class="h1 font-weight-bold text-center mt-4 mt-sm-2 mb-0 mb-sm-4 pb-2 navigo-font">Проекты</h2>
-        <div class="projects text-dark">
+        <h2 class="h1 font-weight-bold text-center mt-4 mt-sm-2 mb-0 mb-sm-4 pb-2 navigo-font">{{translations['projects']}}</h2>
+        <div class="projects">
             <!-- 1 проект -->
             <div class="mb-4">
                 <div class="d-flex align-items-center">
@@ -135,10 +145,7 @@
                     </h3>
                 </div>
                 <p class="mt-2 mb-0">
-                    Чат-бот, предоставляющий пользователям безопасный доступ к ресурсам сети Интернет через VPN. Бот
-                    разработан для автоматизации взаимодействия с VPN-сервисом, предоставления ключей доступа,
-                    управления подписками и анализа статистики использования. Взаимодействие осуществляется через
-                    мессенджер Telegram.
+                    {{translations['LISA_info']}}
                 </p>
             </div>
             <!-- 2 проект -->
@@ -156,8 +163,7 @@
                     </h3>
                 </div>
                 <p class="mt-2 mb-0">
-                    Создание консольного приложения для применения фильтров различного типа (размытие по Гауссу,
-                    обрезание, негатив) к изображению.
+                    {{translations['image_processor_info']}}
                 </p>
             </div>
             <!-- 3 проект -->
@@ -174,8 +180,7 @@
                     </h3>
                 </div>
                 <p class="mt-2 mb-0">
-                    Создание десктопной игры на Unity, позволяющей запоминать созвездия неба. Управляя ракетой,
-                    необходимо облететь все звезды и построить необходимую фигуру.
+                    {{translations['stellayger_info']}}
                 </p>
             </div>
 
@@ -184,9 +189,9 @@
 </section>
 
 
-<section class="goals dark-bg pt-3 pt-sm-5 pb-3">
+<section class="goals dark-bg pt-3 pt-sm-3 pb-3">
     <div class="container">
-    <h2 class="h2 font-weight-bold my-4">Мои цели</h2>
+    <h2 class="h2 font-weight-bold my-4">{{translations['skills']}}</h2>
     <div class="row">
         <div class="col-12 col-sm-8 pb-1">
             <ul class="list-unstyled mb-4">
@@ -195,21 +200,21 @@
                 <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="white"><path
                         d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
               </span>
-                    <span>Закрыться</span>
+                    <span>Python, C++, C, Assembly</span>
                 </li>
                 <li class="d-flex align-items-center align-content-start m-2" style="line-height: 24px;">
               <span class="pr-1">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="white"><path
                         d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
               </span>
-                    <span>Выучить арабский</span>
+                    <span>{{translations['skills_info']}}</span>
                 </li>
                 <li class="d-flex align-items-center align-content-start m-2" style="line-height: 24px;">
               <span class="pr-1">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="white"><path
                         d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
               </span>
-                    <span>Завести ручного крокодила</span>
+                    <span>LaTex, Excel, PhotoShop</span>
                 </li>
             </ul>
         </div>
@@ -218,34 +223,17 @@
 
 <!-- Секция сотрудничества -->
 <section class="goals container mb-5 pb-sm-5 pb-0" id="contact">
-    <h2 class="h2 font-weight-bold my-4">Сотрудничество</h2>
+    <h2 class="h2 font-weight-bold my-4">{{translations['contact']}}</h2>
     <div class="row">
-        <!--        <div class="col-12 col-sm-8 pb-1">-->
-        <!--          <p class="pb-1 mb-1">Если интересно, что я могу для вас сделать, пишите:</p>-->
-        <!--           <ul class="list-unstyled mb-4">-->
-        <!--            <li class="d-flex align-items-center align-content-start m-2" style="line-height: 24px;">-->
-        <!--              <span class="pr-1">-->
-        <!--                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>-->
-        <!--              </span>-->
-        <!--              <span>Найти интересную работу в хорошей компании с возможностью роста</span>-->
-        <!--            </li>-->
-        <!--            <li class="d-flex align-items-center align-content-start m-2" style="line-height: 24px;">-->
-        <!--              <span class="pr-1">-->
-        <!--                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>-->
-        <!--              </span>-->
-        <!--              <span>Поучаствовать в олимпиаде как ml-developer</span>-->
-        <!--            </li>-->
-        <!--          </ul>-->
-        <!-- Блок с кнопками для связи -->
         <div class="row">
             <div class="col-12 col-sm-9">
                 <p class="d-flex justify-content-start gap-2 flex-wrap">
                     <a href="https://t.me/dastroo" class="btn mb-3" style="background-color: #DCFF05; color: #102D69"
-                       target="_blank">Написать в Telegram</a>
+                       target="_blank">{{translations['write_tg']}}</a>
                     <a href="https://example.com/" class="btn mb-3" style="background-color: #DCFF05; color: #102D69"
-                       target="_blank">Посмотреть резюме</a>
+                       target="_blank">{{translations['view_resume']}}</a>
                     <a href="mailto:dikostin@edu.hse.ru" class="btn mb-3"
-                       style="background-color: #DCFF05; color: #102D69" target="_blank">Написать на почту</a>
+                       style="background-color: #DCFF05; color: #102D69" target="_blank">{{translations['email']}}</a>
                 </p>
             </div>
         </div>
@@ -257,7 +245,7 @@
     <nav class="container navbar ">
         <ul class="nav m-auto py-2">
             <li class="nav-item mx-3">
-                Cделано с ожиданием 2025 года
+                {{translations['footer_info']}}
             </li>
         </ul>
     </nav>

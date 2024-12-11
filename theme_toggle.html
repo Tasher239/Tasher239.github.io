@@ -1,0 +1,25 @@
+<div class="theme-toggle-container">
+    <span class="slider-label">Light</span>
+    <input type="checkbox" class="slider" id="theme-toggle" {% if theme == "dark" %} checked {% endif %}>
+    <span class="slider-label">Dark</span>
+</div>
+
+<script>
+    const toggle = document.getElementById('theme-toggle');
+
+    toggle.addEventListener('change', function() {
+        const newTheme = this.checked ? 'dark' : 'light';
+        fetch('/toggle_theme', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ theme: newTheme })
+        })
+        .then(response => {
+            if (response.ok) {
+                location.reload();  // Перезагружаем страницу для применения нового стиля
+            }
+        });
+    });
+</script>
